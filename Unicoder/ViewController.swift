@@ -26,6 +26,16 @@ class ViewController: NSViewController, NSTextViewDelegate {
         view.layer?.backgroundColor = NSColor.init(red: 252/255.0, green: 252/255.0, blue: 250/255.0, alpha: 1).CGColor
         view.layer?.cornerRadius = 5
         
+        let titleLabel = NSTextField.init(frame: CGRect.init(x: (view.frame.width - 100)/2, y: view.frame.height - 35, width: 100, height: 30))
+        titleLabel.stringValue = "Unicoder"
+        titleLabel.bezeled = false
+        titleLabel.drawsBackground = false
+        titleLabel.editable = false
+        titleLabel.selectable = false
+        titleLabel.font = NSFont.init(name: "Eurostile", size: 20)
+        titleLabel.textColor = NSColor.init(red: 230/255.0, green: 75/255.0, blue: 21/255.0, alpha: 1)
+        view.addSubview(titleLabel)
+        
         let topStartLabel = NSTextField.init(frame: CGRect.init(x: 8, y: view.frame.height - 52, width: 20, height: 20))
         topStartLabel.stringValue = ">"
         topStartLabel.bezeled = false
