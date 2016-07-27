@@ -26,7 +26,22 @@ class ViewController: NSViewController, NSTextViewDelegate {
         view.layer?.backgroundColor = NSColor.init(red: 252/255.0, green: 252/255.0, blue: 250/255.0, alpha: 1).CGColor
         view.layer?.cornerRadius = 5
         
-        let titleLabel = NSTextField.init(frame: CGRect.init(x: (view.frame.width - 100)/2, y: view.frame.height - 35, width: 100, height: 30))
+        let redView = NSView.init(frame: CGRect.init(x: 13, y: view.frame.height - 23, width: 12, height: 12))
+        redView.wantsLayer = true
+        redView.layer?.backgroundColor = NSColor.init(red: 255/255.0, green: 98/255.0, blue: 90/255.0, alpha: 1).CGColor
+        redView.layer?.cornerRadius = 6
+        view.addSubview(redView)
+        
+        let orangeView = NSView.init(frame: CGRect.init(x: 35, y: view.frame.height - 23, width: 12, height: 12))
+        orangeView.wantsLayer = true
+        orangeView.layer?.backgroundColor = NSColor.init(red: 255/255.0, green: 192/255.0, blue: 47/255.0, alpha: 1).CGColor
+        orangeView.layer?.cornerRadius = 6
+        view.addSubview(orangeView)
+        
+        let panView = NSView.init(frame: CGRect.init(x: 60, y: view.frame.height - 35, width: view.frame.width - 60, height: 35))
+        view.addSubview(panView)
+        
+        let titleLabel = NSTextField.init(frame: CGRect.init(x: (view.frame.width - 100)/2 + 10, y: view.frame.height - 35, width: 100, height: 30))
         titleLabel.stringValue = "Unicoder"
         titleLabel.bezeled = false
         titleLabel.drawsBackground = false
