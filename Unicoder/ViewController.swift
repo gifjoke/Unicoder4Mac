@@ -102,8 +102,8 @@ class ViewController: NSViewController, NSTextViewDelegate {
     }
     
     func stringToUnicoder(string:NSString) -> NSString {
-        let resultStr = string.stringByAddingPercentEscapesUsingEncoding(NSUnicodeStringEncoding)
-        return NSString.init(UTF8String: resultStr!)!
+        let data = string.dataUsingEncoding(NSNonLossyASCIIStringEncoding)
+        return NSString.init(data: data!, encoding: NSUTF8StringEncoding)!
     }
 
     override var representedObject: AnyObject? {
