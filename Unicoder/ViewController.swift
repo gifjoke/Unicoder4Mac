@@ -93,15 +93,12 @@ class ViewController: NSViewController, NSTextViewDelegate {
     }
     
     func unicodeToString(string:NSString) -> NSString {
-        let tempStr1 = string.stringByReplacingOccurrencesOfString("\\u", withString: "\\U")
-        let tempStr2 = tempStr1.stringByReplacingOccurrencesOfString("\"", withString: "\"")
-        let tempStr3 = "\"".stringByAppendingString(tempStr2).stringByAppendingString("\"")
-        let tempData = tempStr3.dataUsingEncoding(NSUTF8StringEncoding)
-        var resultStr = ""
-        if let result = try? NSPropertyListSerialization.propertyListWithData(tempData!, options: .Immutable, format: nil) {
-            resultStr = result as! String
-            return result as! NSString}
-        return resultStr
+        let data = string.dataUsingEncoding(NSUTF8StringEncoding)
+        var resultStr = NSString.init(data: data!, encoding: NSNonLossyASCIIStringEncoding)
+        if resultStr == nil {
+            resultStr = ""
+        }
+        return resultStr!
     }
     
     func stringToUnicoder(string:NSString) -> NSString {
