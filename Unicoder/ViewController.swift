@@ -66,9 +66,9 @@ class ViewController: NSViewController, NSTextViewDelegate {
         typeLabel.selectable = false
         typeLabel.font = NSFont.init(name: "Eurostile", size: 15)
         typeLabel.wantsLayer = true
-        typeLabel.layer?.borderColor = NSColor.init(red: 230/255.0, green: 75/255.0, blue: 21/255.0, alpha: 1).CGColor
+        typeLabel.layer?.borderColor = NSColor.lightGrayColor().CGColor
         typeLabel.layer?.borderWidth = 2
-        typeLabel.textColor = NSColor.init(red: 230/255.0, green: 75/255.0, blue: 21/255.0, alpha: 1)
+        typeLabel.textColor = NSColor.lightGrayColor()
         view.addSubview(typeLabel)
         
         let bottomStartLabel = NSTextField.init(frame: CGRect.init(x: 8, y: view.frame.height / 2 - 42, width: 20, height: 20))
