@@ -12,6 +12,7 @@ class ViewController: NSViewController, NSTextViewDelegate {
     
     var topTextView:NSTextView! = nil
     var bottomTextView:NSTextView! = nil
+    var typeLabel:NSTextField! = nil
     override func viewDidAppear() {
         let win = view.window!
         win.backgroundColor = NSColor.init(red: 252/255.0, green: 252/255.0, blue: 250/255.0, alpha: 1)
@@ -57,6 +58,19 @@ class ViewController: NSViewController, NSTextViewDelegate {
         topTextView.delegate = self
         view.addSubview(topTextView)
         
+        typeLabel = NSTextField.init(frame: CGRect.init(x: view.frame.width - 80, y: view.frame.height / 2 - 12, width: 70, height: 20))
+        typeLabel.stringValue = "  Unicode"
+        typeLabel.bezeled = false
+        typeLabel.drawsBackground = false
+        typeLabel.editable = false
+        typeLabel.selectable = false
+        typeLabel.font = NSFont.init(name: "Eurostile", size: 15)
+        typeLabel.wantsLayer = true
+        typeLabel.layer?.borderColor = NSColor.init(red: 230/255.0, green: 75/255.0, blue: 21/255.0, alpha: 1).CGColor
+        typeLabel.layer?.borderWidth = 2
+        typeLabel.textColor = NSColor.init(red: 230/255.0, green: 75/255.0, blue: 21/255.0, alpha: 1)
+        view.addSubview(typeLabel)
+        
         let bottomStartLabel = NSTextField.init(frame: CGRect.init(x: 8, y: view.frame.height / 2 - 42, width: 20, height: 20))
         bottomStartLabel.stringValue = ">"
         bottomStartLabel.bezeled = false
@@ -73,6 +87,12 @@ class ViewController: NSViewController, NSTextViewDelegate {
         bottomTextView.font = NSFont.systemFontOfSize(18)
         bottomTextView.textColor = NSColor.init(red: 108/255.0, green: 113/255.0, blue: 196/255.0, alpha: 1)
         view.addSubview(bottomTextView)
+        
+        let segmentControl = NSSegmentedControl.init(frame: CGRect.init(x: 0, y: 0, width: 200, height: 20))
+        segmentControl.setLabel("Unicode", forSegment: 0)
+        segmentControl.setLabel("UTF8", forSegment: 1)
+        segmentControl.setLabel("UTF16", forSegment: 2)
+        view.addSubview(segmentControl)
     }
     
     func update(noti:NSNotification) {
