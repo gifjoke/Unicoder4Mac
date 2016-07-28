@@ -49,11 +49,11 @@ class ViewController: NSViewController, NSTextViewDelegate {
         topStartLabel.textColor = NSColor.init(red: 230/255.0, green: 75/255.0, blue: 21/255.0, alpha: 1)
         view.addSubview(topStartLabel)
         
-        topTextView = NSTextView.init(frame: CGRect.init(x: 30, y: view.frame.height / 2, width: view.frame.width - 10 - 30, height: (view.frame.height - 10 * 2 - 50) / 2))
+        topTextView = NSTextView.init(frame: CGRect.init(x: 30, y: view.frame.height / 2 - 2, width: view.frame.width - 10 - 30, height: (view.frame.height - 10 * 2 - 50) / 2))
         topTextView.backgroundColor = NSColor.clearColor()
         topTextView.insertionPointColor = NSColor.init(red: 108/255.0, green: 113/255.0, blue: 196/255.0, alpha: 1)
         topTextView.textColor = NSColor.init(red: 108/255.0, green: 113/255.0, blue: 196/255.0, alpha: 1)
-        topTextView.font = NSFont.systemFontOfSize(20)
+        topTextView.font = NSFont.systemFontOfSize(18)
         topTextView.delegate = self
         view.addSubview(topTextView)
         
@@ -67,10 +67,10 @@ class ViewController: NSViewController, NSTextViewDelegate {
         bottomStartLabel.textColor = NSColor.init(red: 230/255.0, green: 75/255.0, blue: 21/255.0, alpha: 1)
         view.addSubview(bottomStartLabel)
         
-        bottomTextView = NSTextView.init(frame: CGRect.init(x: 30, y: 10, width: view.frame.width - 10 - 30, height: (view.frame.height - 10 * 2 - 50) / 2))
+        bottomTextView = NSTextView.init(frame: CGRect.init(x: 30, y: 10 - 1, width: view.frame.width - 10 - 30, height: (view.frame.height - 10 * 2 - 50) / 2))
         bottomTextView.editable = false
         bottomTextView.backgroundColor = NSColor.clearColor()
-        bottomTextView.font = NSFont.systemFontOfSize(20)
+        bottomTextView.font = NSFont.systemFontOfSize(18)
         bottomTextView.textColor = NSColor.init(red: 108/255.0, green: 113/255.0, blue: 196/255.0, alpha: 1)
         view.addSubview(bottomTextView)
     }
