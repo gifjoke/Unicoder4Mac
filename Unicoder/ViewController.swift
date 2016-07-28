@@ -79,7 +79,16 @@ class ViewController: NSViewController, NSTextViewDelegate {
         let textView = noti.object as! NSTextView
         if textView == topTextView {
             let string = textView.string
-            bottomTextView.string = unicodeToString(string!) as String
+            bottomTextView.string = unicodeHandle(string!) as String
+        }
+    }
+    
+    func unicodeHandle(string:NSString) -> NSString {
+        if string.rangeOfString("\\u").location != NSNotFound {
+            return unicodeToString(string)
+        }
+        else {
+            return stringToUnicoder(string)
         }
     }
     
@@ -93,6 +102,11 @@ class ViewController: NSViewController, NSTextViewDelegate {
             resultStr = result as! String
             return result as! NSString}
         return resultStr
+    }
+    
+    func stringToUnicoder(string:NSString) -> NSString {
+        let resultStr = string.stringByAddingPercentEscapesUsingEncoding(NSUnicodeStringEncoding)
+        return NSString.init(UTF8String: resultStr!)!
     }
 
     override var representedObject: AnyObject? {
