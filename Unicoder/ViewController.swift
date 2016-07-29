@@ -21,6 +21,7 @@ class ViewController: NSViewController, NSTextViewDelegate {
         win.styleMask = win.styleMask | NSFullSizeContentViewWindowMask;
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(update(_:)), name: NSTextViewDidChangeSelectionNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(update(_:)), name: "encodeTypeChanged", object: nil)
     }
 
     override func viewDidLoad() {
@@ -96,9 +97,15 @@ class ViewController: NSViewController, NSTextViewDelegate {
     }
     
     func update(noti:NSNotification) {
-        let textView = noti.object as! NSTextView
-        if textView == topTextView {
-            let string = textView.string
+        let string = topTextView.string
+        switch NSUserDefaults.standardUserDefaults().objectForKey("encodeType") as! NSString {
+        case "encode":
+            bottomTextView.string = unicodeHandle(string!) as String
+        case "utf8":
+            bottomTextView.string = utf8Handle(string!) as String
+        case "url":
+            bottomTextView.string = urlHandle(string!) as String
+        default:
             bottomTextView.string = unicodeHandle(string!) as String
         }
     }
@@ -108,7 +115,7 @@ class ViewController: NSViewController, NSTextViewDelegate {
             return unicodeToString(string)
         }
         else {
-            return stringToUnicoder(string)
+            return stringToUnicode(string)
         }
     }
     
@@ -121,15 +128,47 @@ class ViewController: NSViewController, NSTextViewDelegate {
         return resultStr!
     }
     
-    func stringToUnicoder(string:NSString) -> NSString {
+    func stringToUnicode(string:NSString) -> NSString {
         let data = string.dataUsingEncoding(NSNonLossyASCIIStringEncoding)
         return NSString.init(data: data!, encoding: NSUTF8StringEncoding)!
     }
-
-    override var representedObject: AnyObject? {
-        didSet {
-        // Update the view, if already loaded.
+    
+    func utf8Handle(string:NSString) -> NSString {
+        if string.rangeOfString("&#").location != NSNotFound {
+            return utf8ToString(string)
         }
+        else {
+            return stringToUtf8(string)
+        }
+    }
+    
+    func utf8ToString(string:NSString) -> NSString {
+        return NSString.init(UTF8String: string.UTF8String)!
+    }
+    
+    func stringToUtf8(string:NSString) -> NSString {
+        let escapedString = string.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+        return escapedString!
+    }
+    
+    func urlHandle(string:NSString) -> NSString {
+        if string.rangeOfString("%").location != NSNotFound {
+            return urlToString(string)
+        }
+        else {
+            return stringToUrl(string)
+        }
+    }
+    
+    func urlToString(string:NSString) -> NSString {
+        let s = "aa bb -[:/?&=;+!@#$()',*]";
+        let sEncode = s.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+       return (sEncode?.stringByRemovingPercentEncoding)!
+    }
+    
+    func stringToUrl(string:NSString) -> NSString {
+        let escapedString = string.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+        return escapedString!
     }
 
 }
