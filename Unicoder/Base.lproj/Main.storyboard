@@ -59,17 +59,6 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Edit" id="ppA-UW-jDj">
                                     <items>
-                                        <menuItem title="Undo" keyEquivalent="z" id="kiQ-Sz-9tA">
-                                            <connections>
-                                                <action selector="undo:" target="Ady-hI-5gd" id="p3n-gP-RTZ"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Redo" keyEquivalent="Z" id="tlh-ke-yfk">
-                                            <connections>
-                                                <action selector="redo:" target="Ady-hI-5gd" id="wQF-yq-LTi"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="RaF-fq-YE9"/>
                                         <menuItem title="Cut" keyEquivalent="x" id="x9d-F9-GNr">
                                             <connections>
                                                 <action selector="cut:" target="Ady-hI-5gd" id="dsV-jz-DSV"/>
@@ -89,6 +78,11 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="delete:" target="Ady-hI-5gd" id="AFW-j8-kY3"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Select All" keyEquivalent="a" id="f6L-QK-xoF">
+                                            <connections>
+                                                <action selector="selectAll:" target="Ady-hI-5gd" id="d2n-ut-nWC"/>
                                             </connections>
                                         </menuItem>
                                     </items>
