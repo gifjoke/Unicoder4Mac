@@ -104,7 +104,7 @@
                                                 <action selector="encodeTypeTapped:" target="Voe-Tx-rLC" id="GD8-LI-uCm"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="                             URL" tag="102" id="eZp-ct-fEH">
+                                        <menuItem title="                             GBK" tag="102" id="eZp-ct-fEH">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="encodeTypeTapped:" target="Voe-Tx-rLC" id="Cs4-y8-Dzy"/>

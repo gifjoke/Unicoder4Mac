@@ -60,7 +60,6 @@ class ViewController: NSViewController, NSTextViewDelegate {
         view.addSubview(topTextView)
         
         typeLabel = NSTextField.init(frame: CGRect.init(x: view.frame.width - 80, y: view.frame.height / 2 - 17, width: 70, height: 26))
-        typeLabel.stringValue = " Unicode"
         typeLabel.bezeled = false
         typeLabel.drawsBackground = false
         typeLabel.editable = false
@@ -70,6 +69,7 @@ class ViewController: NSViewController, NSTextViewDelegate {
         typeLabel.layer?.borderColor = NSColor.lightGrayColor().CGColor
         typeLabel.layer?.borderWidth = 2
         typeLabel.textColor = NSColor.lightGrayColor()
+        updateTypeLabel()
         view.addSubview(typeLabel)
         
         let bottomStartLabel = NSTextField.init(frame: CGRect.init(x: 8, y: view.frame.height / 2 - 50, width: 20, height: 30))
@@ -106,10 +106,24 @@ class ViewController: NSViewController, NSTextViewDelegate {
             bottomTextView.string = unicodeHandle(string!) as String
         case "utf8":
             bottomTextView.string = utf8Handle(string!) as String
-        case "url":
-            bottomTextView.string = urlHandle(string!) as String
+        case "gbk":
+            bottomTextView.string = gbkHandle(string!) as String
         default:
             bottomTextView.string = unicodeHandle(string!) as String
+        }
+        updateTypeLabel()
+    }
+    
+    func updateTypeLabel() {
+        switch NSUserDefaults.standardUserDefaults().objectForKey("encodeType") as! NSString {
+        case "encode":
+            typeLabel.stringValue = " Unicode"
+        case "utf8":
+            typeLabel.stringValue = "    UTF8"
+        case "gbk":
+            typeLabel.stringValue = "    GBK"
+        default:
+            typeLabel.stringValue = " Unicode"
         }
     }
     
@@ -137,7 +151,7 @@ class ViewController: NSViewController, NSTextViewDelegate {
     }
     
     func utf8Handle(string:NSString) -> NSString {
-        if string.rangeOfString("&#").location != NSNotFound {
+        if string.rangeOfString("%").location != NSNotFound {
             return utf8ToString(string)
         }
         else {
@@ -146,7 +160,7 @@ class ViewController: NSViewController, NSTextViewDelegate {
     }
     
     func utf8ToString(string:NSString) -> NSString {
-        return NSString.init(UTF8String: string.UTF8String)!
+        return string.stringByRemovingPercentEncoding!
     }
     
     func stringToUtf8(string:NSString) -> NSString {
@@ -154,24 +168,21 @@ class ViewController: NSViewController, NSTextViewDelegate {
         return escapedString!
     }
     
-    func urlHandle(string:NSString) -> NSString {
+    func gbkHandle(string:NSString) -> NSString {
         if string.rangeOfString("%").location != NSNotFound {
-            return urlToString(string)
+            return gbkToString(string)
         }
         else {
-            return stringToUrl(string)
+            return stringToGbk(string)
         }
     }
     
-    func urlToString(string:NSString) -> NSString {
-        let s = "aa bb -[:/?&=;+!@#$()',*]";
-        let sEncode = s.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-       return (sEncode?.stringByRemovingPercentEncoding)!
+    func gbkToString(string:NSString) -> NSString {
+        return ""
     }
     
-    func stringToUrl(string:NSString) -> NSString {
-        let escapedString = string.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
-        return escapedString!
+    func stringToGbk(string:NSString) -> NSString {
+        return ""
     }
 
 }
