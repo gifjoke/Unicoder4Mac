@@ -28,14 +28,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
     }
-    
-    @IBAction func encodeTypeTapped(sender: AnyObject) {
-        let item = sender as! NSMenuItem
-        let typeArray = ["Unicode", "URL", "Base64"]
-        let string:NSString = typeArray[item.tag - 100]
-        NSUserDefaults.standardUserDefaults().setObject(string, forKey: "encodeType")
-        NSNotificationCenter.defaultCenter().postNotificationName("encodeTypeChanged", object: nil)
-    }
 
 }
 

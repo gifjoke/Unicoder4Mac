@@ -88,31 +88,6 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="😋😋 Tap Here To Change Encode Type 😋😋" id="5QF-Oa-p0T" userLabel="Type">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="😋😋 Tap Here To Change Encode Type 😋😋" autoenablesItems="NO" id="W48-6f-4Dl">
-                                    <items>
-                                        <menuItem title="                             Unicode                              " tag="100" id="aNE-j3-S5R">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="encodeTypeTapped:" target="Voe-Tx-rLC" id="30W-C0-CjO"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="                                 URL" tag="101" id="cwR-ZZ-pXv">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="encodeTypeTapped:" target="Voe-Tx-rLC" id="GD8-LI-uCm"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="                              Base64" tag="102" id="eZp-ct-fEH">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="encodeTypeTapped:" target="Voe-Tx-rLC" id="Cs4-y8-Dzy"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
                         </items>
                     </menu>
                     <connections>

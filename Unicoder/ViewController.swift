@@ -11,8 +11,8 @@ import Cocoa
 class ViewController: NSViewController, NSTextViewDelegate {
     var topTextView:NSTextView! = nil
     var bottomTextView:NSTextView! = nil
-    var typeLabel:NSTextField! = nil
-    
+    var typeMatrix: NSMatrix! = nil
+    var directionMatrix: NSMatrix! = nil
     override func viewDidAppear() {
         let win = view.window!
         win.backgroundColor = NSColor.init(red: 252/255.0, green: 252/255.0, blue: 250/255.0, alpha: 1)
@@ -21,12 +21,11 @@ class ViewController: NSViewController, NSTextViewDelegate {
         win.styleMask = win.styleMask | NSFullSizeContentViewWindowMask;
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(update(_:)), name: NSTextViewDidChangeSelectionNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(update(_:)), name: "encodeTypeChanged", object: nil)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.init(red: 252/255.0, green: 252/255.0, blue: 250/255.0, alpha: 1).CGColor
         view.layer?.cornerRadius = 5
@@ -59,45 +58,6 @@ class ViewController: NSViewController, NSTextViewDelegate {
         topTextView.delegate = self
         view.addSubview(topTextView)
         
-        let encodeLabel = NSTextField.init(frame: CGRect.init(x: view.frame.width - 80, y: view.frame.height / 2 - 17 + 26 + 3, width: 70, height: 26))
-        encodeLabel.stringValue = "  Encode"
-        encodeLabel.bezeled = false
-        encodeLabel.drawsBackground = false
-        encodeLabel.editable = false
-        encodeLabel.selectable = false
-        encodeLabel.font = NSFont.init(name: "Avenir Next", size: 15)
-        encodeLabel.wantsLayer = true
-        encodeLabel.layer?.borderColor = NSColor.lightGrayColor().CGColor
-        encodeLabel.layer?.borderWidth = 2
-        encodeLabel.textColor = NSColor.lightGrayColor()
-        view.addSubview(encodeLabel)
-        
-        typeLabel = NSTextField.init(frame: CGRect.init(x: view.frame.width - 80, y: view.frame.height / 2 - 17, width: 70, height: 26))
-        typeLabel.bezeled = false
-        typeLabel.drawsBackground = false
-        typeLabel.editable = false
-        typeLabel.selectable = false
-        typeLabel.font = NSFont.init(name: "Avenir Next", size: 15)
-        typeLabel.wantsLayer = true
-        typeLabel.layer?.borderColor = NSColor.lightGrayColor().CGColor
-        typeLabel.layer?.borderWidth = 2
-        typeLabel.textColor = NSColor.lightGrayColor()
-        updateTypeLabel()
-        view.addSubview(typeLabel)
-        
-        let decodeLabel = NSTextField.init(frame: CGRect.init(x: view.frame.width - 80, y: view.frame.height / 2 - 17 - 26 - 3, width: 70, height: 26))
-        decodeLabel.stringValue = "  Decode"
-        decodeLabel.bezeled = false
-        decodeLabel.drawsBackground = false
-        decodeLabel.editable = false
-        decodeLabel.selectable = false
-        decodeLabel.font = NSFont.init(name: "Avenir Next", size: 15)
-        decodeLabel.wantsLayer = true
-        decodeLabel.layer?.borderColor = NSColor.lightGrayColor().CGColor
-        decodeLabel.layer?.borderWidth = 2
-        decodeLabel.textColor = NSColor.lightGrayColor()
-        view.addSubview(decodeLabel)
-        
         let bottomStartLabel = NSTextField.init(frame: CGRect.init(x: 8, y: view.frame.height / 2 - 50, width: 20, height: 30))
         bottomStartLabel.stringValue = ">"
         bottomStartLabel.bezeled = false
@@ -115,54 +75,81 @@ class ViewController: NSViewController, NSTextViewDelegate {
         bottomTextView.textColor = NSColor.init(red: 108/255.0, green: 113/255.0, blue: 196/255.0, alpha: 1)
         view.addSubview(bottomTextView)
         
+        //EncodeType
+        let encodeLabel = NSTextField.init(frame: CGRect.init(x: view.frame.width - 100, y: view.frame.height - 90, width: 75, height: 26))
+        encodeLabel.stringValue = "     Type"
+        encodeLabel.bezeled = false
+        encodeLabel.drawsBackground = false
+        encodeLabel.editable = false
+        encodeLabel.selectable = false
+        encodeLabel.font = NSFont.init(name: "Avenir Next", size: 15)
+        encodeLabel.wantsLayer = true
+        encodeLabel.layer?.borderColor = NSColor.lightGrayColor().CGColor
+        encodeLabel.layer?.borderWidth = 2
+        encodeLabel.textColor = NSColor.lightGrayColor()
+        view.addSubview(encodeLabel)
+        
         let prototype = NSButtonCell.init()
         prototype.title = "EncodeType"
         prototype.setButtonType(.RadioButton)
-        let myMatrix = NSMatrix.init(frame: CGRect.init(x: view.frame.width - 100, y: view.frame.height - 200, width: 100, height: 100),
-                                     mode: .RadioModeMatrix,
-                                     prototype: prototype,
-                                     numberOfRows: 3,
-                                     numberOfColumns: 1)
-        view.addSubview(myMatrix)
-        let cellArray = myMatrix.cells
+        typeMatrix = NSMatrix.init(frame: CGRect.init(x: view.frame.width - 100, y: view.frame.height - 200, width: 100, height: 100),
+                                   mode: .RadioModeMatrix,
+                                   prototype: prototype,
+                                   numberOfRows: 3,
+                                   numberOfColumns: 1)
+        var cellArray = typeMatrix.cells
         cellArray[0].title = "Unicode"
         cellArray[1].title = "URL"
         cellArray[2].title = "Base64"
+        view.addSubview(typeMatrix)
+        
+        //EncodeDirection
+        let decodeLabel = NSTextField.init(frame: CGRect.init(x: view.frame.width - 100, y: view.frame.height - 290, width: 72, height: 26))
+        decodeLabel.stringValue = " Direction"
+        decodeLabel.bezeled = false
+        decodeLabel.drawsBackground = false
+        decodeLabel.editable = false
+        decodeLabel.selectable = false
+        decodeLabel.font = NSFont.init(name: "Avenir Next", size: 15)
+        decodeLabel.wantsLayer = true
+        decodeLabel.layer?.borderColor = NSColor.lightGrayColor().CGColor
+        decodeLabel.layer?.borderWidth = 2
+        decodeLabel.textColor = NSColor.lightGrayColor()
+        view.addSubview(decodeLabel)
+        
+        prototype.title = "EncodeDirection"
+        prototype.setButtonType(.RadioButton)
+        directionMatrix = NSMatrix.init(frame: CGRect.init(x: view.frame.width - 100, y: view.frame.height - 400, width: 100, height: 100),
+                                        mode: .RadioModeMatrix,
+                                        prototype: prototype,
+                                        numberOfRows: 2,
+                                        numberOfColumns: 1)
+        cellArray = directionMatrix.cells
+        cellArray[0].title = "Encode"
+        cellArray[1].title = "Decode"
+        view.addSubview(directionMatrix)
     }
     
     func update(noti:NSNotification) {
         if noti.object as? NSTextView == bottomTextView {
             return
         }
+        let typeIndex = typeMatrix.selectedRow
         let string = topTextView.string
-        switch NSUserDefaults.standardUserDefaults().objectForKey("encodeType") as! NSString {
-        case "Unicode":
+        switch typeIndex {
+        case 0:
             bottomTextView.string = UnicodeHandle(string!) as String
-        case "URL":
+        case 1:
             bottomTextView.string = URLHandle(string!) as String
-        case "Base64":
+        case 2:
             bottomTextView.string = Base64Handle(string!) as String
         default:
             bottomTextView.string = UnicodeHandle(string!) as String
         }
-        updateTypeLabel()
-    }
-    
-    func updateTypeLabel() {
-        switch NSUserDefaults.standardUserDefaults().objectForKey("encodeType") as! NSString {
-        case "Unicode":
-            typeLabel.stringValue = " Unicode"
-        case "URL":
-            typeLabel.stringValue = "    URL"
-        case "Base64":
-            typeLabel.stringValue = "  Base64"
-        default:
-            typeLabel.stringValue = " Unicode"
-        }
     }
     
     func UnicodeHandle(string:NSString) -> NSString {
-        if string.rangeOfString("\\u").location != NSNotFound {
+        if directionMatrix.selectedRow == 1 {
             return UnicodeDecode(string)
         }
         else {
@@ -171,7 +158,7 @@ class ViewController: NSViewController, NSTextViewDelegate {
     }
     
     func URLHandle(string:NSString) -> NSString {
-        if string.rangeOfString("%").location != NSNotFound {
+        if directionMatrix.selectedRow == 1 {
             return URLDecode(string)
         }
         else {
@@ -180,7 +167,7 @@ class ViewController: NSViewController, NSTextViewDelegate {
     }
     
     func Base64Handle(string:NSString) -> NSString {
-        if string.rangeOfString("%").location != NSNotFound {
+        if directionMatrix.selectedRow == 1 {
             return Base64Decode(string)
         }
         else {
