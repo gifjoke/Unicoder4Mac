@@ -59,6 +59,19 @@ class ViewController: NSViewController, NSTextViewDelegate {
         topTextView.delegate = self
         view.addSubview(topTextView)
         
+        let encodeLabel = NSTextField.init(frame: CGRect.init(x: view.frame.width - 80, y: view.frame.height / 2 - 17 + 26 + 3, width: 70, height: 26))
+        encodeLabel.stringValue = "  Encode"
+        encodeLabel.bezeled = false
+        encodeLabel.drawsBackground = false
+        encodeLabel.editable = false
+        encodeLabel.selectable = false
+        encodeLabel.font = NSFont.init(name: "Avenir Next", size: 15)
+        encodeLabel.wantsLayer = true
+        encodeLabel.layer?.borderColor = NSColor.lightGrayColor().CGColor
+        encodeLabel.layer?.borderWidth = 2
+        encodeLabel.textColor = NSColor.lightGrayColor()
+        view.addSubview(encodeLabel)
+        
         typeLabel = NSTextField.init(frame: CGRect.init(x: view.frame.width - 80, y: view.frame.height / 2 - 17, width: 70, height: 26))
         typeLabel.bezeled = false
         typeLabel.drawsBackground = false
@@ -71,6 +84,19 @@ class ViewController: NSViewController, NSTextViewDelegate {
         typeLabel.textColor = NSColor.lightGrayColor()
         updateTypeLabel()
         view.addSubview(typeLabel)
+        
+        let decodeLabel = NSTextField.init(frame: CGRect.init(x: view.frame.width - 80, y: view.frame.height / 2 - 17 - 26 - 3, width: 70, height: 26))
+        decodeLabel.stringValue = "  Decode"
+        decodeLabel.bezeled = false
+        decodeLabel.drawsBackground = false
+        decodeLabel.editable = false
+        decodeLabel.selectable = false
+        decodeLabel.font = NSFont.init(name: "Avenir Next", size: 15)
+        decodeLabel.wantsLayer = true
+        decodeLabel.layer?.borderColor = NSColor.lightGrayColor().CGColor
+        decodeLabel.layer?.borderWidth = 2
+        decodeLabel.textColor = NSColor.lightGrayColor()
+        view.addSubview(decodeLabel)
         
         let bottomStartLabel = NSTextField.init(frame: CGRect.init(x: 8, y: view.frame.height / 2 - 50, width: 20, height: 30))
         bottomStartLabel.stringValue = ">"
@@ -102,88 +128,56 @@ class ViewController: NSViewController, NSTextViewDelegate {
         }
         let string = topTextView.string
         switch NSUserDefaults.standardUserDefaults().objectForKey("encodeType") as! NSString {
-        case "encode":
-            bottomTextView.string = unicodeHandle(string!) as String
-        case "utf8":
-            bottomTextView.string = utf8Handle(string!) as String
-        case "gbk":
-            bottomTextView.string = gbkHandle(string!) as String
+        case "Unicode":
+            bottomTextView.string = UnicodeHandle(string!) as String
+        case "URL":
+            bottomTextView.string = URLHandle(string!) as String
+        case "Base64":
+            bottomTextView.string = Base64Handle(string!) as String
         default:
-            bottomTextView.string = unicodeHandle(string!) as String
+            bottomTextView.string = UnicodeHandle(string!) as String
         }
         updateTypeLabel()
     }
     
     func updateTypeLabel() {
         switch NSUserDefaults.standardUserDefaults().objectForKey("encodeType") as! NSString {
-        case "encode":
+        case "Unicode":
             typeLabel.stringValue = " Unicode"
-        case "utf8":
-            typeLabel.stringValue = "    UTF8"
-        case "gbk":
-            typeLabel.stringValue = "    GBK"
+        case "URL":
+            typeLabel.stringValue = "    URL"
+        case "Base64":
+            typeLabel.stringValue = "  Base64"
         default:
             typeLabel.stringValue = " Unicode"
         }
     }
     
-    func unicodeHandle(string:NSString) -> NSString {
+    func UnicodeHandle(string:NSString) -> NSString {
         if string.rangeOfString("\\u").location != NSNotFound {
-            return unicodeToString(string)
+            return UnicodeDecode(string)
         }
         else {
-            return stringToUnicode(string)
+            return UnicodeEncode(string)
         }
     }
     
-    func unicodeToString(string:NSString) -> NSString {
-        let data = string.dataUsingEncoding(NSUTF8StringEncoding)
-        var resultStr = NSString.init(data: data!, encoding: NSNonLossyASCIIStringEncoding)
-        if resultStr == nil {
-            resultStr = ""
-        }
-        return resultStr!
-    }
-    
-    func stringToUnicode(string:NSString) -> NSString {
-        let data = string.dataUsingEncoding(NSNonLossyASCIIStringEncoding)
-        return NSString.init(data: data!, encoding: NSUTF8StringEncoding)!
-    }
-    
-    func utf8Handle(string:NSString) -> NSString {
+    func URLHandle(string:NSString) -> NSString {
         if string.rangeOfString("%").location != NSNotFound {
-            return utf8ToString(string)
+            return URLDecode(string)
         }
         else {
-            return stringToUtf8(string)
+            return URLEncode(string)
         }
     }
     
-    func utf8ToString(string:NSString) -> NSString {
-        return string.stringByRemovingPercentEncoding!
-    }
-    
-    func stringToUtf8(string:NSString) -> NSString {
-        let escapedString = string.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
-        return escapedString!
-    }
-    
-    func gbkHandle(string:NSString) -> NSString {
+    func Base64Handle(string:NSString) -> NSString {
         if string.rangeOfString("%").location != NSNotFound {
-            return gbkToString(string)
+            return Base64Decode(string)
         }
         else {
-            return stringToGbk(string)
+            return Base64Encode(string)
         }
     }
-    
-    func gbkToString(string:NSString) -> NSString {
-        return ""
-    }
-    
-    func stringToGbk(string:NSString) -> NSString {
-        return ""
-    }
-
 }
 
