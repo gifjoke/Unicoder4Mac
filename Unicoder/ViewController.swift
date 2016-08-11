@@ -115,11 +115,19 @@ class ViewController: NSViewController, NSTextViewDelegate {
         bottomTextView.textColor = NSColor.init(red: 108/255.0, green: 113/255.0, blue: 196/255.0, alpha: 1)
         view.addSubview(bottomTextView)
         
-        let segmentControl = NSSegmentedControl.init(frame: CGRect.init(x: 0, y: 0, width: 200, height: 20))
-        segmentControl.setLabel("Unicode", forSegment: 0)
-        segmentControl.setLabel("UTF8", forSegment: 1)
-        segmentControl.setLabel("UTF16", forSegment: 2)
-        view.addSubview(segmentControl)
+        let prototype = NSButtonCell.init()
+        prototype.title = "EncodeType"
+        prototype.setButtonType(.RadioButton)
+        let myMatrix = NSMatrix.init(frame: CGRect.init(x: view.frame.width - 100, y: view.frame.height - 200, width: 100, height: 100),
+                                     mode: .RadioModeMatrix,
+                                     prototype: prototype,
+                                     numberOfRows: 3,
+                                     numberOfColumns: 1)
+        view.addSubview(myMatrix)
+        let cellArray = myMatrix.cells
+        cellArray[0].title = "Unicode"
+        cellArray[1].title = "URL"
+        cellArray[2].title = "Base64"
     }
     
     func update(noti:NSNotification) {
