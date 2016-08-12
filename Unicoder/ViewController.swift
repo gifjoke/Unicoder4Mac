@@ -76,16 +76,16 @@ class ViewController: NSViewController, NSTextViewDelegate {
         view.addSubview(bottomTextView)
         
         //EncodeType
-        let encodeTypeLabel = NSTextField.init(frame: CGRect.init(x: view.frame.width - 85, y: view.frame.height - 90, width: 75, height: 26))
-        encodeTypeLabel.stringValue = "     Type"
+        let encodeTypeLabel = NSTextField.init(frame: CGRect.init(x: view.frame.width - 85, y: view.frame.height - 95, width: 75, height: 26))
+        encodeTypeLabel.stringValue = "Type"
         encodeTypeLabel.bezeled = false
         encodeTypeLabel.drawsBackground = false
         encodeTypeLabel.editable = false
         encodeTypeLabel.selectable = false
         encodeTypeLabel.font = NSFont.init(name: "Avenir Next", size: 15)
         encodeTypeLabel.wantsLayer = true
-        encodeTypeLabel.layer?.borderColor = NSColor.lightGrayColor().CGColor
-        encodeTypeLabel.layer?.borderWidth = 2
+//        encodeTypeLabel.layer?.borderColor = NSColor.lightGrayColor().CGColor
+//        encodeTypeLabel.layer?.borderWidth = 2
         encodeTypeLabel.textColor = NSColor.lightGrayColor()
         view.addSubview(encodeTypeLabel)
         
@@ -106,16 +106,16 @@ class ViewController: NSViewController, NSTextViewDelegate {
         view.addSubview(typeMatrix)
         
         //EncodeDirection
-        let encodeDireLabel = NSTextField.init(frame: CGRect.init(x: view.frame.width - 85, y: view.frame.height - 290, width: 72, height: 26))
-        encodeDireLabel.stringValue = "     Dire"
+        let encodeDireLabel = NSTextField.init(frame: CGRect.init(x: view.frame.width - 85, y: view.frame.height - 295, width: 72, height: 26))
+        encodeDireLabel.stringValue = "Dire"
         encodeDireLabel.bezeled = false
         encodeDireLabel.drawsBackground = false
         encodeDireLabel.editable = false
         encodeDireLabel.selectable = false
         encodeDireLabel.font = NSFont.init(name: "Avenir Next", size: 15)
         encodeDireLabel.wantsLayer = true
-        encodeDireLabel.layer?.borderColor = NSColor.lightGrayColor().CGColor
-        encodeDireLabel.layer?.borderWidth = 2
+//        encodeDireLabel.layer?.borderColor = NSColor.lightGrayColor().CGColor
+//        encodeDireLabel.layer?.borderWidth = 2
         encodeDireLabel.textColor = NSColor.lightGrayColor()
         view.addSubview(encodeDireLabel)
         
