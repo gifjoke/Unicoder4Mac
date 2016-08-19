@@ -7,4 +7,5 @@ Swift实现，Mac端字符串编码、解码小工具。
 
 ![Preview](Preview/preview0.png)
 
-这个小工具有自己的网站哦，http://unicoder.cn，欢迎来访。
+这个小工具有自己的网站哦，欢迎来访。
+http://unicoder.cn
