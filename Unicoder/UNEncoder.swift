@@ -44,3 +44,40 @@ func Base64Decode(string: NSString) -> NSString {
         return string
     }
 }
+
+func Escape(string: NSString) -> NSString {
+    let result = NSMutableString.init(string: "")
+    for i in 0 ... string.length - 1 {
+        let uc = string.substringWithRange(NSRange.init(location: i, length: 1))
+        switch uc {
+        case "\"":
+            result.appendString("\\\"")
+            break
+        case "\'":
+            result.appendString("\\\'")
+            
+            break
+        case "\\":
+            result.appendString("\\\\")
+            break
+        case "\t":
+            result.appendString("\\t")
+            break
+        case "\n":
+            result.appendString("\\n")
+            break
+        case "\r":
+            result.appendString("\\r")
+            break
+        case "\u{8}":
+            result.appendString("\\u{8}")
+            break
+        case "\u{12}":
+            result.appendString("\\u{12}")
+        default:
+            result.appendString(uc)
+            break
+        }
+    }
+    return result.copy() as! String
+}
