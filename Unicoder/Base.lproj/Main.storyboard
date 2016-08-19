@@ -59,6 +59,16 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Edit" id="ppA-UW-jDj">
                                     <items>
+                                        <menuItem title="Undo" keyEquivalent="z" id="ucB-QM-tKo">
+                                            <connections>
+                                                <action selector="undo:" target="Ady-hI-5gd" id="8Ky-Dp-wpC"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Redo" keyEquivalent="Z" id="hiY-o5-uYA">
+                                            <connections>
+                                                <action selector="redo:" target="Ady-hI-5gd" id="aOS-3P-etx"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Cut" keyEquivalent="x" id="x9d-F9-GNr">
                                             <connections>
                                                 <action selector="cut:" target="Ady-hI-5gd" id="dsV-jz-DSV"/>
